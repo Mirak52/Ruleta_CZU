@@ -126,8 +126,8 @@
     End Function
 
     Private Sub Play_Click(sender As Object, e As EventArgs) Handles Play.Click
+        Me.Controls.Clear()
+        InitializeComponent()
         Roulette.Show()
-        Me.Hide()
-
     End Sub
 End Class
