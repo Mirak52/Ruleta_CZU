@@ -63,6 +63,26 @@ Namespace My.Resources
         '''<summary>
         '''  Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property kolo() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("kolo", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property kolo1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("kolo1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Vyhledává lokalizovaný prostředek typu System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property ruleta() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ruleta", resourceCulture)

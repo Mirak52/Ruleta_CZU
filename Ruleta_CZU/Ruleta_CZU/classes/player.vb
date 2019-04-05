@@ -45,9 +45,4 @@
             _success = value
         End Set
     End Property
-
-
-    Public Function test()
-        Return 50
-    End Function
 End Class

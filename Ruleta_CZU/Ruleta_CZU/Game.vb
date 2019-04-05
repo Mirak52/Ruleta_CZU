@@ -9,6 +9,14 @@
         TipsView.Rows.Clear()
         TipsView.Columns.Add("tip", "Vsazeno na")
         TipsView.Columns.Add("money", "Peněz vsazeno")
+
+        AddHandler FirstHalfB.Click, AddressOf ButtonClicked
+        AddHandler LastHalfB.Click, AddressOf ButtonClicked
+        AddHandler RedB.Click, AddressOf ButtonClicked
+        AddHandler BlackB.Click, AddressOf ButtonClicked
+        AddHandler OddB.Click, AddressOf ButtonClicked
+        AddHandler EvenB.Click, AddressOf ButtonClicked
+
     End Sub
     Private Function createButtons()
         Dim x As Integer
@@ -38,9 +46,12 @@
     End Function
     Private Sub ButtonClicked(ByVal sender As Object, ByVal e As EventArgs)
         'MsgBox("You clicked: " + sender.name + vbCrLf & "Button name: " + sender.Text)
-        Dim i As Integer = getTip()
-        MakeTip(sender.text, i)
-
+        If player.moneyLeft >= 10 Then
+            Dim i As Integer = getTip()
+            MakeTip(sender.text, i)
+        Else
+            MsgBox("Na sázení už nemáš dost peněz")
+        End If
     End Sub
     Dim column As Integer = 0
     Private Function MakeTip(tip As String, tipMoney As Integer)
@@ -65,12 +76,19 @@
 
     Private Function checkPlayerMoneyLeft()
         If player.moneyLeft < 10 Then
-
+            TenTip.Hide()
+            FiftyTip.Hide()
+            HundredTip.Hide()
         ElseIf player.moneyLeft < 50 Then
-
+            FiftyTip.Hide()
+            HundredTip.Hide()
         ElseIf player.moneyLeft < 100 Then
+            HundredTip.Hide()
+        Else
+            TenTip.Show()
+            FiftyTip.Show()
+            HundredTip.Show()
         End If
-
     End Function
 
     Private Function checkTips(tip As String) As Object
@@ -108,27 +126,8 @@
     End Function
 
     Private Sub Play_Click(sender As Object, e As EventArgs) Handles Play.Click
-
-    End Sub
-
-
-
-    Private Sub EvenB_Click(sender As Object, e As EventArgs) Handles EvenB.Click
-
-    End Sub
-    Private Sub OddB_Click(sender As Object, e As EventArgs) Handles OddB.Click
-
-    End Sub
-    Private Sub FirstHalfB_Click(sender As Object, e As EventArgs) Handles FirstHalfB.Click
-
-    End Sub
-    Private Sub LastHalfB_Click(sender As Object, e As EventArgs) Handles LastHalfB.Click
-
-    End Sub
-    Private Sub BlackB_Click(sender As Object, e As EventArgs) Handles BlackB.Click
-
-    End Sub
-    Private Sub RedB_Click(sender As Object, e As EventArgs) Handles RedB.Click
+        Roulette.Show()
+        Me.Hide()
 
     End Sub
 End Class

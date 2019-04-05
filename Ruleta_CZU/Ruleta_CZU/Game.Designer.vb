@@ -341,14 +341,14 @@ Partial Class Game
         Me.TipsView.Location = New System.Drawing.Point(1561, 13)
         Me.TipsView.Name = "TipsView"
         Me.TipsView.RowTemplate.Height = 24
-        Me.TipsView.Size = New System.Drawing.Size(292, 639)
+        Me.TipsView.Size = New System.Drawing.Size(228, 639)
         Me.TipsView.TabIndex = 23
         '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(1974, 804)
+        Me.ClientSize = New System.Drawing.Size(1801, 804)
         Me.Controls.Add(Me.TipsView)
         Me.Controls.Add(Me.LastHalfB)
         Me.Controls.Add(Me.OddB)
@@ -371,7 +371,9 @@ Partial Class Game
         Me.Controls.Add(Me.Money)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Game"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MainMenu"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.TipsView, System.ComponentModel.ISupportInitialize).EndInit()
@@ -382,7 +384,6 @@ Partial Class Game
     Friend WithEvents Money As Label
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents HundredTip As RadioButton
-    Friend WithEvents FiftyTip As RadioButton
     Friend WithEvents TenTip As RadioButton
     Friend WithEvents TipsTen As Label
     Friend WithEvents TipsFifty As Label
@@ -405,4 +406,5 @@ Partial Class Game
     Friend WithEvents LastHalfB As Button
     Friend WithEvents RedB As Button
     Friend WithEvents TipsView As DataGridView
+    Friend WithEvents FiftyTip As RadioButton
 End Class
