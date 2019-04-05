@@ -37,7 +37,7 @@
         AddHandler Bet_0.Click, AddressOf ButtonClicked
     End Function
     Private Sub ButtonClicked(ByVal sender As Object, ByVal e As EventArgs)
-        MsgBox("You clicked: " + sender.name + vbCrLf & "Button name: " + sender.Text)
+        'MsgBox("You clicked: " + sender.name + vbCrLf & "Button name: " + sender.Text)
         Dim i As Integer = getTip()
         MakeTip(sender.text, i)
 
@@ -45,14 +45,12 @@
     Dim column As Integer = 0
     Private Function MakeTip(tip As String, tipMoney As Integer)
         Play.Visible = Visible
-        Dim alreadyTiped As String = False
+        Dim alreadyTiped As String = Nothing
 
         If column > 0 Then
             alreadyTiped = checkTips(tip)
         End If
-
-        If alreadyTiped Then
-            TipsView.Rows(alreadyTiped).Cells(0).Value = TipsView.Rows(alreadyTiped).Cells(0).Value + tip
+        If Not IsNothing(alreadyTiped) Then
             TipsView.Rows(alreadyTiped).Cells(1).Value = TipsView.Rows(alreadyTiped).Cells(1).Value + tipMoney
         Else
             TipsView.Rows.Add(1)
@@ -60,17 +58,30 @@
             TipsView.Rows(column).Cells(1).Value = tipMoney
             column = column + 1
         End If
+        player.moneyLeft = player.moneyLeft - tipMoney
+        showPlayerStats()
+        checkPlayerMoneyLeft()
+    End Function
+
+    Private Function checkPlayerMoneyLeft()
+        If player.moneyLeft < 10 Then
+
+        ElseIf player.moneyLeft < 50 Then
+
+        ElseIf player.moneyLeft < 100 Then
+        End If
+
     End Function
 
     Private Function checkTips(tip As String) As Object
         Dim i As Integer = 0
         For Each row As DataGridViewRow In TipsView.Rows
-            'If row.Cells(0).Value.Equals(tip) Then Vrací nulovou hodnotu nutno pošéfit!
-            '    Return i
-            'End If
+            If row.Cells(0).Value = tip Then
+                Return i
+            End If
             i = i + 1
         Next
-        Return False
+        Return Nothing
     End Function
 
     Private Function getTip()
@@ -81,9 +92,11 @@
         End If
         Return 100
     End Function
+
     Private Function resetMoneyLeft()
         player.moneyLeft = player.money
     End Function
+
     Private Function showPlayerStats()
         MoneyL.Text = player.money
         MoneyLL.Text = player.moneyLeft
