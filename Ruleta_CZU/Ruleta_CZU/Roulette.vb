@@ -12,17 +12,6 @@
         newPictureBox.Height = 700
         newPictureBox.Location = New Point(12, 12)
         Me.Controls.Add(newPictureBox)
-
-        Randomize()
-        value = CInt(Int((37 * Rnd()) - 1))
-        For Each row As Integer In roulette
-            If row = value Then
-                index = r
-            End If
-            r = r + 1
-        Next
-        r = 0
-        Timer1.Enabled = True
     End Sub
     Dim roulette = New Integer() {0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26}
     Private radio(37) As RadioButton
@@ -42,11 +31,9 @@
                     .Name = Roulette(n)
                     .Left = x
                     .Top = y
-
                     If n = 0 Then
                         .Checked = True
                     End If
-
                 End With
             End If
             n = n + 1
@@ -56,13 +43,17 @@
     Dim n As Integer = 0
     Dim r As Integer = 0
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        If r >= index + 111 Then
+        '111
+        If r >= index Then
             Timer1.Enabled = False
             radio(n).Checked = False
+            radio(n).BackColor = Color.White
             radio(index).Checked = True
+            radio(index).BackColor = Color.Yellow
+
             Back.Show()
             MsgBox("Vyhrálo číslo " + value.ToString + " pojďme se mrknout co to pro tebe znamená")
-
+            showTipResults()
         Else
             radio(n).BackColor = Color.White
             radio(n).Checked = False
@@ -78,9 +69,84 @@
             radio(n).BackColor = Color.Yellow
         End If
     End Sub
-
+    Public Sub startRoulette()
+        Win.Hide()
+        Lose.Hide()
+        Randomize()
+        value = CInt(Int((37 * Rnd()) + 0))
+        r = 0
+        For Each row As Integer In roulette
+            If row = value Then
+                index = r
+            End If
+            r = r + 1
+        Next
+        r = 0
+        n = 0
+        Timer1.Enabled = True
+    End Sub
+    Private Sub showTipResults()
+        Dim bool As Boolean
+        Dim winMoney As Integer = 0
+        Dim loseMoney As Integer = 0
+        For Each row As DataGridViewRow In Game.TipsView.Rows
+            bool = True
+            If row.Cells(0).Value = value.ToString Then
+                Game.player.win = Game.player.win + 1
+                winMoney = winMoney + row.Cells(1).Value * 35
+                bool = False
+            End If
+            If row.Cells(0).Value = "SUDÁ" And roulette(index) Mod 2 = 0 Then
+                winMoney = winMoney + row.Cells(1).Value
+                Game.player.win = Game.player.win + 1
+                bool = False
+            End If
+            If row.Cells(0).Value = "LICHÁ" And roulette(index) Mod 2 > 0 Then
+                bool = False
+                Game.player.win = Game.player.win + 1
+                winMoney = winMoney + row.Cells(1).Value
+            End If
+            If row.Cells(0).Value = "ČERVENÁ" And roulette(index) Mod 2 > 0 Then
+                winMoney = winMoney + row.Cells(1).Value
+                Game.player.win = Game.player.win + 1
+                bool = False
+            End If
+            If row.Cells(0).Value = "ČERNÁ" And roulette(index) Mod 2 = 0 Then
+                bool = False
+                Game.player.win = Game.player.win + 1
+                winMoney = winMoney + row.Cells(1).Value
+            End If
+            If row.Cells(0).Value = "1-18" Then
+                bool = False
+                Game.player.win = Game.player.win + 1
+                winMoney = winMoney + row.Cells(1).Value
+            End If
+            If row.Cells(0).Value = "19-36" Then
+                bool = False
+                Game.player.win = Game.player.win + 1
+                winMoney = winMoney + row.Cells(1).Value
+            End If
+            If bool Then
+                If row.Cells(0).Value = "nothing" Then
+                Else
+                    Game.player.lose = Game.player.lose + 1
+                    loseMoney = loseMoney + row.Cells(1).Value
+                End If
+            End If
+        Next
+        Win.Visible = Visible
+        Win.Text = "Vyhrál si: " + winMoney.ToString
+        Lose.Visible = Visible
+        Lose.Text = "Prohrál si: " + loseMoney.ToString
+        Game.player.money = Game.player.money + winMoney - loseMoney
+    End Sub
     Private Sub Back_Click(sender As Object, e As EventArgs) Handles Back.Click
+        Me.Hide()
+        radio(index).Checked = False
+        radio(index).BackColor = Color.White
+        Back.Hide()
         Game.Show()
-        'Do příště musím upravit aby se refreshnula stránka.. pravděpodobně spustit reset code
+        Game.freshStart()
+
     End Sub
 End Class

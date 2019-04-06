@@ -49,6 +49,7 @@ Partial Class Game
         Me.LastHalfB = New System.Windows.Forms.Button()
         Me.RedB = New System.Windows.Forms.Button()
         Me.TipsView = New System.Windows.Forms.DataGridView()
+        Me.winRate = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TipsView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -338,17 +339,29 @@ Partial Class Game
         Me.TipsView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.TipsView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders
         Me.TipsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.TipsView.Enabled = False
         Me.TipsView.Location = New System.Drawing.Point(1561, 13)
         Me.TipsView.Name = "TipsView"
         Me.TipsView.RowTemplate.Height = 24
         Me.TipsView.Size = New System.Drawing.Size(228, 639)
         Me.TipsView.TabIndex = 23
         '
+        'winRate
+        '
+        Me.winRate.AutoSize = True
+        Me.winRate.Font = New System.Drawing.Font("Microsoft Sans Serif", 19.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
+        Me.winRate.Location = New System.Drawing.Point(319, 718)
+        Me.winRate.Name = "winRate"
+        Me.winRate.Size = New System.Drawing.Size(35, 38)
+        Me.winRate.TabIndex = 24
+        Me.winRate.Text = "0"
+        '
         'Game
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1801, 804)
+        Me.Controls.Add(Me.winRate)
         Me.Controls.Add(Me.TipsView)
         Me.Controls.Add(Me.LastHalfB)
         Me.Controls.Add(Me.OddB)
@@ -407,4 +420,5 @@ Partial Class Game
     Friend WithEvents RedB As Button
     Friend WithEvents TipsView As DataGridView
     Friend WithEvents FiftyTip As RadioButton
+    Friend WithEvents winRate As Label
 End Class

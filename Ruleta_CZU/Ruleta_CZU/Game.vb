@@ -1,5 +1,5 @@
 ﻿Public Class Game
-    Dim player As New Player
+    Public player As New Player
 
     Public WithEvents newButton As Windows.Forms.Button
     Private Sub Pool_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -45,7 +45,6 @@
         AddHandler Bet_0.Click, AddressOf ButtonClicked
     End Function
     Private Sub ButtonClicked(ByVal sender As Object, ByVal e As EventArgs)
-        'MsgBox("You clicked: " + sender.name + vbCrLf & "Button name: " + sender.Text)
         If player.moneyLeft >= 10 Then
             Dim i As Integer = getTip()
             MakeTip(sender.text, i)
@@ -54,7 +53,7 @@
         End If
     End Sub
     Dim column As Integer = 0
-    Private Function MakeTip(tip As String, tipMoney As Integer)
+    Private Sub MakeTip(tip As String, tipMoney As Integer)
         Play.Visible = Visible
         Dim alreadyTiped As String = Nothing
 
@@ -72,9 +71,9 @@
         player.moneyLeft = player.moneyLeft - tipMoney
         showPlayerStats()
         checkPlayerMoneyLeft()
-    End Function
+    End Sub
 
-    Private Function checkPlayerMoneyLeft()
+    Private Sub checkPlayerMoneyLeft()
         If player.moneyLeft < 10 Then
             TenTip.Hide()
             FiftyTip.Hide()
@@ -89,7 +88,7 @@
             FiftyTip.Show()
             HundredTip.Show()
         End If
-    End Function
+    End Sub
 
     Private Function checkTips(tip As String) As Object
         Dim i As Integer = 0
@@ -111,11 +110,22 @@
         Return 100
     End Function
 
-    Private Function resetMoneyLeft()
+    Public Sub freshStart()
+        Play.Hide()
+        resetMoneyLeft()
+        showPlayerStats()
+        TipsView.Rows.Clear()
+        winRate.Text = (player.win / player.lose) * 100
+        If player.money = 0 Then
+            MsgBox("Vypadá to že jsi na suchu")
+        End If
+    End Sub
+    Private Sub resetMoneyLeft()
         player.moneyLeft = player.money
-    End Function
+        checkPlayerMoneyLeft()
+    End Sub
 
-    Private Function showPlayerStats()
+    Private Sub showPlayerStats()
         MoneyL.Text = player.money
         MoneyLL.Text = player.moneyLeft
         WinL.Text = player.win
@@ -123,11 +133,13 @@
         TipsTen.Text = player.moneyLeft \ 10
         TipsFifty.Text = player.moneyLeft \ 50
         TipsHundred.Text = player.moneyLeft \ 100
-    End Function
+    End Sub
 
     Private Sub Play_Click(sender As Object, e As EventArgs) Handles Play.Click
-        Me.Controls.Clear()
-        InitializeComponent()
+        column = 0
+        Roulette.startRoulette()
+        Roulette.Timer1.Interval = 30
         Roulette.Show()
+        Me.Hide()
     End Sub
 End Class
