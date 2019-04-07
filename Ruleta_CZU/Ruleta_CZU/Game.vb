@@ -115,7 +115,12 @@
         resetMoneyLeft()
         showPlayerStats()
         TipsView.Rows.Clear()
-        winRate.Text = (player.win / player.lose) * 100
+        If (player.win / player.lose) * 100 > 100 Then
+            winRate.Text = 100 & " %"
+
+        Else
+            winRate.Text = (player.win / player.lose) * 100 & " %"
+        End If
         If player.money = 0 Then
             MsgBox("Vypadá to že jsi na suchu")
         End If

@@ -44,7 +44,7 @@
     Dim r As Integer = 0
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         '111
-        If r >= index Then
+        If r >= index + 111 Then
             Timer1.Enabled = False
             radio(n).Checked = False
             radio(n).BackColor = Color.White
@@ -106,28 +106,28 @@
                 Game.player.win = Game.player.win + 1
                 winMoney = winMoney + row.Cells(1).Value
             End If
-            If row.Cells(0).Value = "ČERVENÁ" And roulette(index) Mod 2 > 0 Then
+            If row.Cells(0).Value = "ČERVENÁ" And index Mod 2 > 0 Then
                 winMoney = winMoney + row.Cells(1).Value
                 Game.player.win = Game.player.win + 1
                 bool = False
             End If
-            If row.Cells(0).Value = "ČERNÁ" And roulette(index) Mod 2 = 0 Then
+            If row.Cells(0).Value = "ČERNÁ" And index Mod 2 = 0 Then
                 bool = False
                 Game.player.win = Game.player.win + 1
                 winMoney = winMoney + row.Cells(1).Value
             End If
-            If row.Cells(0).Value = "1-18" Then
+            If row.Cells(0).Value = "1-18" And roulette(index) < 19 Then
                 bool = False
                 Game.player.win = Game.player.win + 1
                 winMoney = winMoney + row.Cells(1).Value
             End If
-            If row.Cells(0).Value = "19-36" Then
+            If row.Cells(0).Value = "19-36" And roulette(index) > 18 Then
                 bool = False
                 Game.player.win = Game.player.win + 1
                 winMoney = winMoney + row.Cells(1).Value
             End If
             If bool Then
-                If row.Cells(0).Value = "nothing" Then
+                If row.Cells(0).Value = Nothing Then
                 Else
                     Game.player.lose = Game.player.lose + 1
                     loseMoney = loseMoney + row.Cells(1).Value
