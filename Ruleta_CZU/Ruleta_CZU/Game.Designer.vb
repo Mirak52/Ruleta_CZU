@@ -50,6 +50,7 @@ Partial Class Game
         Me.RedB = New System.Windows.Forms.Button()
         Me.TipsView = New System.Windows.Forms.DataGridView()
         Me.winRate = New System.Windows.Forms.Label()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.GroupBox1.SuspendLayout()
         CType(Me.TipsView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -421,4 +422,5 @@ Partial Class Game
     Friend WithEvents TipsView As DataGridView
     Friend WithEvents FiftyTip As RadioButton
     Friend WithEvents winRate As Label
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
 End Class

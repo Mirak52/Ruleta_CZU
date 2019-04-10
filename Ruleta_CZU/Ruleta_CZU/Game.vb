@@ -139,9 +139,20 @@
         TipsFifty.Text = player.moneyLeft \ 50
         TipsHundred.Text = player.moneyLeft \ 100
     End Sub
-
+    Dim i As Integer = 0
     Private Sub Play_Click(sender As Object, e As EventArgs) Handles Play.Click
         column = 0
+        FileOpen(1, "Tipy.txt", OpenMode.Append)
+        For Each row As DataGridViewRow In TipsView.Rows
+            If i < TipsView.Rows.Count - 1 Then
+                i = i + 1
+                Write(1, row.Cells(0).Value)
+                Write(1, row.Cells(1).Value)
+            End If
+        Next
+        FileClose(1)
+
+
         Roulette.startRoulette()
         Roulette.Timer1.Interval = 30
         Roulette.Show()
